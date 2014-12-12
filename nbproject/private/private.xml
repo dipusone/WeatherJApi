@@ -5,8 +5,8 @@
         <group>
             <file>file:/home/jacopo/NetBeansProjects/WeatherApi/src/weatherapi/openweathermap/jaxb/Symbol.java</file>
             <file>file:/home/jacopo/NetBeansProjects/WeatherApi/src/weatherapi/openweathermap/jaxb/Location.java</file>
+            <file>file:/home/jacopo/NetBeansProjects/WeatherApi/src/weatherapi/openweathermap/jaxb/CloudLevel.java</file>
             <file>file:/home/jacopo/NetBeansProjects/WeatherApi/src/weatherapi/openweathermap/jaxb/Forecast.java</file>
-            <file>file:/home/jacopo/NetBeansProjects/WeatherApi/src/weatherapi/WeatherApi.java</file>
         </group>
     </open-files>
 </project-private>
