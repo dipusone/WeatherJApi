@@ -38,6 +38,24 @@ public class Symbol {
         this.conditionCode = conditionCode;
     }
     
+    //Checkers
+    
+    
+    public boolean hasDescription(){
+        return this.getDescription() != null ;
+    }
+    
+    public boolean  hasIcon(){
+        return this.getIcon() != null;
+        
+    }
+    
+    public boolean hasConditionCode(){
+        return this.getConditionCode() != null;
+        
+    
+    }
+    
     
 
 }
