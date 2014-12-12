@@ -22,16 +22,16 @@ public class WeaterMain {
         WeatherProvider wp = new WeatherProvider();
         wp.setApyKey(API_KEY);
         wp.setOpenWeatherUrl(new URL("http://api.openweathermap.org/data/2.5/"));
-        wp.setFormat("xml");
-        wp.setUnits("metric");
+        wp.setFormat(WeatherProvider.FORMAT_XML);
+        wp.setUnits(WeatherProvider.UNIT_METRIC);
         
-        Weatherdata weather = wp.getForecast("Milano", "it", 16);
+        Weatherdata weather = wp.getDailyForecast("Milano", "it", 16);
 
         if (weather != null ) {
             SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
             Integer conditionCode;
             for (Forecast forecats : weather.getForecasts()){
-                System.out.println("\n\nDay: " + dateFormatter.format(forecats.getFrom()));
+                System.out.println("\n\nDay: " + dateFormatter.format(forecats.getDate()));
                 System.out.println("Forecast: " + forecats.getSymbol().getDescription());
                 conditionCode = forecats.getSymbol().getConditionCode()/100;
                 System.out.println("Code: " + conditionCode);
