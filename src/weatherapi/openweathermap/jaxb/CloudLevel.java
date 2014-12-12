@@ -5,25 +5,36 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class CloudLevel {
-	private String description;
-	
-	private int percent;
 
-	public String getDescription() {
-		return description;
-	}
-	
-	@XmlAttribute(name="value")
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    private String description;
+    private int percent;
+    private String unit;
 
-	public int getPercent() {
-		return percent;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	@XmlAttribute(name="all")
-	public void setPercent(int percent) {
-		this.percent = percent;
-	}
+    @XmlAttribute(name = "value")
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    @XmlAttribute(name = "all")
+    public void setPercent(int percent) {
+        this.percent = percent;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+    
+    @XmlAttribute(name = "unit")
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
 }

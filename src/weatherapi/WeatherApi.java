@@ -7,13 +7,14 @@ package weatherapi;
  */
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import weatherapi.openweathermap.jaxb.Forecast;
-import weatherapi.openweathermap.jaxb.Temperature;
 import weatherapi.openweathermap.jaxb.Weatherdata;
 
 public class WeatherApi {
@@ -28,8 +29,22 @@ public class WeatherApi {
         }
 
         if (weather != null ) {
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+            Integer conditionCode;
             for (Forecast forecats : weather.getForecasts()){
-                System.out.println("Day: " + forecats.getDate());
+                System.out.println("\n\nDay: " + dateFormatter.format(forecats.getDate()));
+                System.out.println("Forecast: " + forecats.getSymbol().getDescription());
+                conditionCode = forecats.getSymbol().getConditionCode()/100;
+                System.out.println("Code: " + conditionCode);
+                if (conditionCode >= 2 && conditionCode <= 6){
+                    System.out.println("BAD");
+                }else{
+                    System.out.println("GOOD");
+                }
+                System.out.println("Clouds: " + forecats.getCloudLevel().getDescription());
+               
+                
+                
                 
             }
         }else{

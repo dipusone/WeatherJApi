@@ -8,7 +8,9 @@ public class Symbol {
 
     private String description;
     private String icon;
-
+    private Integer conditionCode;
+    
+    
     public String getDescription() {
         return description;
     }
@@ -26,5 +28,16 @@ public class Symbol {
     public void setIcon(String icon) {
         this.icon = icon;
     }
+
+    public Integer getConditionCode() {
+        return conditionCode;
+    }
+
+    @XmlAttribute(name = "number")
+    public void setConditionCode(Integer conditionCode) {
+        this.conditionCode = conditionCode;
+    }
+    
+    
 
 }
