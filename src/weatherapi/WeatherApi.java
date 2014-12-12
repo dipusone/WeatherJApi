@@ -19,48 +19,45 @@ import weatherapi.openweathermap.jaxb.Weatherdata;
 public class WeatherApi {
 
     public static void main(String[] arg) throws Exception {
-        run();
+        Weatherdata weather = null;
+        System.out.println("Getting data");
+        try {
+            weather = WeatherApi.retrieveWeatherData();
+        } catch (JAXBException e) {
+            System.out.println(e);
+        }
+
+        if (weather != null ) {
+            for (Forecast forecats : weather.getForecasts()){
+                System.out.println("Day: " + forecats.getDate());
+                
+            }
+        }else{
+            System.err.println("Error");
+            
+        }
 
     }
 
-    final protected static URL WEATHER_DATA_URL;
+    static URL WEATHER_DATA_URL;
+    final static String API_KEY = "f838f38bc7d05a5d974922ac35a2e4d9";
+    
+    
+        
+    
 
-    static {
+    public static Weatherdata retrieveWeatherData() throws JAXBException {
         URL urlResult;
         try {
-            urlResult = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=Munich&cnt=2&mode=xml&lang=de&units=metric");
+            urlResult = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=Milano&mode=xml&units=metric&cnt=7"+"&APIID="+API_KEY);
 
         } catch (MalformedURLException e) {
             urlResult = null;
         }
         WEATHER_DATA_URL = urlResult;
-    }
-
-    public static void run() {
-        Weatherdata weather = null;
-        try {
-            weather = retrieveWeatherData();
-        } catch (JAXBException e) {
-            System.out.println(e);
-        }
-
-        if (weather != null && weather.getForecasts().length == 2) {
-            Forecast forecast = weather.getForecasts()[1];
-            Temperature temperature = forecast.getTemperature();
-            String dayOfWeek = forecast.getDate().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.GERMAN);
-            String line1 = String.format("%s:   %02.0f - %02.0f  C",
-                    String.format("%2s", dayOfWeek), //2 signs of the day, "Mo", "Di", "Mi"...
-                    temperature.getMinimum(),
-                    temperature.getMaximum());
-            String line2 = forecast.getSymbol().getDescription();
-            System.out.println(line1);
-            System.out.println(line2);
-            System.out.println(forecast.getSymbol().getIcon());
-        }
-    }
-
-    protected static Weatherdata retrieveWeatherData() throws JAXBException {
-        Weatherdata result = null;
+        
+        System.out.println("FullUrl= "+WEATHER_DATA_URL);
+        Weatherdata result;
 
         JAXBContext context = JAXBContext.newInstance(Weatherdata.class);
 

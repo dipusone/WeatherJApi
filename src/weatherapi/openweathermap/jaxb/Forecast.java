@@ -1,6 +1,7 @@
 package weatherapi.openweathermap.jaxb;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,17 +9,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Forecast {
-	private Calendar date;
+	private Date date;
 	private Symbol symbol;
 	private Temperature temperature;
 	private CloudLevel cloudLevel;
 	
-	public Calendar getDate() {
+	public Date getDate() {
 		return date;
 	}
 	
 	@XmlAttribute(name="day")
-	public void setDate(Calendar date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
