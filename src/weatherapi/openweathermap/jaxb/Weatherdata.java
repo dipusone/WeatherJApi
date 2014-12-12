@@ -30,8 +30,12 @@ public class Weatherdata {
 		this.location = location;
 	}
 	
-	@Override
-	public String toString() {
-		return this.location.getName();
-	}
+        
+        public boolean hasForecast(){
+            return this.getForecasts() != null;
+        }
+        
+        public boolean hasLocation(){
+            return this.getLocation() != null;
+        }
 }

@@ -75,4 +75,30 @@ public class Forecast {
     public void setCloudLevel(CloudLevel cloudLevel) {
         this.cloudLevel = cloudLevel;
     }
+    
+    public boolean hasCloudLEvel(){
+        return this.getCloudLevel() != null;
+    }
+    
+    public boolean hasDate(){
+        return this.getDate() != null;
+    }
+    
+    public boolean  hasFrom(){
+        return this.getFrom() !=null;
+    }
+    
+    public boolean hasTo(){
+        return this.getTo() != null;
+    }
+    
+    public boolean hasSymbol(){
+        return this.getSymbol() != null;
+    }
+    
+    public boolean hasTemperature(){
+        return this.getTemperature() != null;
+    }
+    
+    
 }

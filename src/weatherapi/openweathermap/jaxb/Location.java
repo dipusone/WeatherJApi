@@ -26,5 +26,12 @@ public class Location {
     public void setLocation(String location) {
         this.location = location;
     }
+    
+    public boolean  hasName(){
+        return this.getName() != null;        
+    }
 
+    public boolean hasLocation(){
+        return this.getLocation() != null;
+    }
 }

@@ -53,7 +53,6 @@ public class Symbol {
     public boolean hasConditionCode(){
         return this.getConditionCode() != null;
         
-    
     }
     
     
