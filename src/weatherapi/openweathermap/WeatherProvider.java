@@ -7,11 +7,10 @@ package weatherapi.openweathermap;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import sun.util.calendar.CalendarUtils;
-import weatherapi.openweathermap.jaxb.Forecast;
 import weatherapi.openweathermap.jaxb.Weatherdata;
 
 /**
@@ -20,22 +19,25 @@ import weatherapi.openweathermap.jaxb.Weatherdata;
  */
 public final class WeatherProvider {
     
+        
+    private static final String[] FORMATS = {"xml", "json"};
+    private static final String[] UNITS = {"metric", "imperial"};
+    
+    public static String FORMAT_XML = FORMATS[0];
+    
+    public static String UNIT_METRIC = UNITS[0];
+    public static String UNIT_IMPERIAL = UNITS[1];
+
+
     private URL openWeatherUrl;
     private String apyKey;
     private String format;
-    private String Units;
-    private static final String dailyUrlString="forecast";
-    
-    
-    
+    private String unit;
+    private static final String dailyUrlString = "forecast/daily";
+    private static final String detailedDailyString = "forecast";
+
     public WeatherProvider() {
-        this.setApyKey(null);
-        this.setFormat(null);
-        this.setOpenWeatherUrl(null);
-        this.setUnits(null);
     }
-    
-    
 
     public URL getOpenWeatherUrl() {
         return openWeatherUrl;
@@ -49,7 +51,10 @@ public final class WeatherProvider {
         return apyKey;
     }
 
-    public void setApyKey(String apyKey) {
+    public void setApyKey(String apyKey) throws IllegalArgumentException {
+        if (apyKey == null || apyKey.isEmpty()) {
+            throw new IllegalArgumentException("Apikey null or empty");
+        }
         this.apyKey = apyKey;
     }
 
@@ -57,41 +62,78 @@ public final class WeatherProvider {
         return format;
     }
 
-    public void setFormat(String format) {
+    public void setFormat(String format) throws IllegalArgumentException {
+        if (!Arrays.asList(FORMATS).contains(format)) {
+            throw new IllegalArgumentException("Invalid format");
+        }
         this.format = format;
     }
 
     public String getUnits() {
-        return Units;
+        return unit;
     }
 
-    public void setUnits(String Units) {
-        this.Units = Units;
+    public void setUnits(String unit) throws IllegalArgumentException {
+        if (!Arrays.asList(UNITS).contains(unit)) {
+            throw new IllegalArgumentException("invalid unit");
+        }
+        this.unit = unit;
     }
-    
-    public Weatherdata getForecast(String City, String Nation, int spanntime) throws MalformedURLException, JAXBException{
-        Weatherdata weather =null;
+
+    public Weatherdata getDailyForecast(String city, String country, int spantime) throws MalformedURLException, JAXBException, IllegalArgumentException {
+        return this.getForecast(city, country, spantime, true);
+
+    }
+
+    public Weatherdata getDetailedForecast(String city, String country, int spantime) throws MalformedURLException, JAXBException, IllegalArgumentException {
+        return this.getForecast(city, country, spantime, false);
+
+    }
+
+    private Weatherdata getForecast(String city, String nation, int spantime, boolean daily) throws MalformedURLException, JAXBException, IllegalArgumentException {
+        if (city == null || city.isEmpty()) {
+            throw new IllegalArgumentException("City");
+        }
+        if (spantime <= 0 || spantime > 16) {
+            throw new IllegalArgumentException("Spantime");
+        }
+        if (apyKey == null || apyKey.isEmpty()) {
+            throw new IllegalArgumentException("Apikey must be set before calling this method");
+        }
+        if (!Arrays.asList(FORMATS).contains(format)) {
+            throw new IllegalArgumentException("Format must be set before calling this method");
+        }
+        if (!Arrays.asList(UNITS).contains(unit)) {
+            throw new IllegalArgumentException("Units must be set before calling this method");
+        }
+        if (this.openWeatherUrl == null){
+            throw new IllegalArgumentException("OpenWeather must be set before calling this method");
+        }
+        
+        
+        
+        
+
+        Weatherdata weather;
         String weatherUrlString = this.getOpenWeatherUrl().toString();
-        weatherUrlString += dailyUrlString;
-        weatherUrlString += "?q=" + City +","+ Nation;
-        weatherUrlString += "&mode="+this.getFormat();
-        weatherUrlString += "&units="+this.getUnits();
-        weatherUrlString += "&cnt="+spanntime;
+        weatherUrlString += daily ? dailyUrlString : detailedDailyString;
+        weatherUrlString += "?q=" + city + (nation.isEmpty() ? "" : ("," + nation));
+        weatherUrlString += "&mode=" + this.getFormat();
+        weatherUrlString += "&units=" + this.getUnits();
+        weatherUrlString += "&cnt=" + spantime;
         weatherUrlString += "&APIID=" + this.getApyKey();
-        
+
         URL weaterUrl = new URL(weatherUrlString);
-        
-        System.out.println("URL: "+ weaterUrl);
-        
+
+        System.out.println("URL: " + weaterUrl);
+
         JAXBContext context = JAXBContext.newInstance(Weatherdata.class);
 
         Unmarshaller unmarshaller = context.createUnmarshaller();
         weather = (Weatherdata) unmarshaller.unmarshal(weaterUrl);
-               
+
         return weather;
-        
+
     }
-    
- 
-    
+
 }
