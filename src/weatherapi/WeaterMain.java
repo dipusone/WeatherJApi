@@ -25,7 +25,7 @@ public class WeaterMain {
         wp.setFormat(WeatherProvider.FORMAT_XML);
         wp.setUnits(WeatherProvider.UNIT_METRIC);
         
-        Weatherdata weather = wp.getDailyForecast("Milano", "it", 16);
+        Weatherdata weather = wp.getDailyForecast("Chiaravalle", "it", 16);
 
         if (weather != null ) {
             SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");

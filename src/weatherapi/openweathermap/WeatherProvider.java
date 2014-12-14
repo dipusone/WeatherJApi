@@ -23,8 +23,11 @@ public final class WeatherProvider {
     private static final String[] FORMATS = {"xml", "json"};
     private static final String[] UNITS = {"metric", "imperial"};
     
-    public static String FORMAT_XML = FORMATS[0];
-    
+    /**
+     *Use this constant to set the XML output for the class
+     *
+     */
+    public static String FORMAT_XML = FORMATS[0];    
     public static String UNIT_METRIC = UNITS[0];
     public static String UNIT_IMPERIAL = UNITS[1];
 
@@ -110,10 +113,6 @@ public final class WeatherProvider {
             throw new IllegalArgumentException("OpenWeather must be set before calling this method");
         }
         
-        
-        
-        
-
         Weatherdata weather;
         String weatherUrlString = this.getOpenWeatherUrl().toString();
         weatherUrlString += daily ? dailyUrlString : detailedDailyString;
@@ -124,8 +123,6 @@ public final class WeatherProvider {
         weatherUrlString += "&APIID=" + this.getApyKey();
 
         URL weaterUrl = new URL(weatherUrlString);
-
-        System.out.println("URL: " + weaterUrl);
 
         JAXBContext context = JAXBContext.newInstance(Weatherdata.class);
 

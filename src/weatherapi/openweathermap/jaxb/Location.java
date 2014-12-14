@@ -8,6 +8,7 @@ public class Location {
 
     private String name;
     private String location;
+    private String country;
 
     public String getName() {
         return name;
@@ -27,11 +28,27 @@ public class Location {
         this.location = location;
     }
     
+    
+    public String getCountry() {
+        return country;
+    }
+    
+    @XmlElement(name = "country")
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    
+    
+    
     public boolean  hasName(){
         return this.getName() != null;        
     }
 
     public boolean hasLocation(){
         return this.getLocation() != null;
+    }
+    
+    public boolean hasCountry(){
+        return this.getCountry() != null;
     }
 }
